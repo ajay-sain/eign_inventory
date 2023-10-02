@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="Ajay" id="1 Created new table CATEGORY">
+        <!-- Validations -->
+        <preConditions>
+            <not>
+                <tableExists tableName="CATEGORY"/>
+            </not>
+        </preConditions>
+        <!-- Create Table -->
+        <createTable tableName="CATEGORY">
+            <column autoIncrement="true" name="category_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="category_name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="category_description" type="TEXT">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+        <!-- Roll back -->
+        <rollback>
+            <dropTable tableName="CATEGORY"/>
+        </rollback>
+        <comment>Created new table named 'CATEGORY'</comment>
+    </changeSet>
+
+    <changeSet author="Ajay" id="2 Created new table MANUFACTURER">
+        <!-- Validations -->
+        <preConditions>
+            <not>
+                <tableExists tableName="MANUFACTURER"/>
+            </not>
+        </preConditions>
+        <!-- Create Table -->
+        <createTable tableName="MANUFACTURER">
+            <column autoIncrement="true" name="manufacturer_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="manufacturer_name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+        <!-- Roll back -->
+        <rollback>
+            <dropTable tableName="MANUFACTURER"/>
+        </rollback>
+        <comment>Created new table named 'MANUFACTURER'</comment>
+    </changeSet>
+
+    <changeSet author="Ajay" id="3 Created new table PRODUCT">
+        <!-- Validations -->
+        <preConditions>
+            <not>
+                <tableExists tableName="PRODUCT"/>
+            </not>
+        </preConditions>
+        <!-- Create Table -->
+        <createTable tableName="PRODUCT">
+            <column autoIncrement="true" name="product_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="product_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="0" name="units" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="No_image_available.svg" name="picture" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_description" type="TEXT"/>
+            <column name="Manufacturer_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <!-- Roll back -->
+        <rollback>
+            <dropTable tableName="PRODUCT"/>
+        </rollback>
+        <comment>Created new table named 'PRODUCT'</comment>
+    </changeSet>
+
+    <changeSet  author="Ajay"  id="addForeignKeyConstraint PRODUCT CATEGORY">
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="PRODUCT"
+                                 constraintName="fk_category_id"
+                                 referencedColumnNames="category_id"
+                                 referencedTableName="CATEGORY"/>
+    </changeSet>
+
+    <changeSet  author="Ajay"  id="addForeignKeyConstraint PRODUCT MANUFACTURER">
+        <addForeignKeyConstraint baseColumnNames="manufacturer_id"
+                                 baseTableName="PRODUCT"
+                                 constraintName="fk_manufacturer_idd"
+                                 referencedColumnNames="manufacturer_id"
+                                 referencedTableName="MANUFACTURER"/>
+    </changeSet>
+</databaseChangeLog>
