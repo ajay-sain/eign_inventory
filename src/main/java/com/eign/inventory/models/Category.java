@@ -1,6 +1,4 @@
 package com.eign.inventory.models;
-rm -rvf
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Entity;
